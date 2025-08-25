@@ -22,8 +22,9 @@ type ProductHandler struct {
 }
 
 func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
-	var input domain.ProductInput
 
+	var input domain.ProductInput
+	
 	err := json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
