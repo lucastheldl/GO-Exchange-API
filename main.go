@@ -7,10 +7,14 @@ import (
 	"net/http"
 	"os"
 
+	"go-api/product/infra"
+
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v5"
 	"github.com/joho/godotenv"
 )
+
+var Conn *pgx.Conn
 
 // função principal
 func main() {
@@ -26,16 +30,20 @@ func main() {
 		os.Exit(1)
 	}
 	ctx := context.Background()
-	// Connect to the database
-	conn, err := pgx.Connect(ctx, connString)
+
+	Conn, err := pgx.Connect(ctx, connString)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	defer conn.Close(ctx)
+
+
+	defer Conn.Close(ctx)
 	fmt.Println("Connection established")
 	
     router := mux.NewRouter()
+
+	infra.RegisterRoutes(router, Conn)
 	
 	fmt.Println("🚀 Server running at http://localhost:8000")
 
