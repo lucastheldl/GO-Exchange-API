@@ -7,7 +7,7 @@
 - **Create Products:** Users can add products to the platform.  
 - **List Products:** View all available products on the home feed.  
 - **Trade Offers:** Other users can create trade offers to exchange products.  
-- **User Management:** Basic user identification for trading (optional).  
+- **User Management:** Basic user identification for trading.
 
 ## API Endpoints
 soon...
