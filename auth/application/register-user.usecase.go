@@ -1,0 +1,6 @@
+package application
+
+
+func RegisterUserUseCase(){
+	
+}
