@@ -3,8 +3,8 @@ package infra
 import (
 	"encoding/json"
 	"fmt"
-	"go-api/auth/application"
-	"go-api/auth/domain"
+	"go-api/user/application"
+	"go-api/user/domain"
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v5"
@@ -23,7 +23,7 @@ type ProductHandler struct {
 
 
 func (h *ProductHandler) register(w http.ResponseWriter, r *http.Request){
-	var input domain.AuthInput
+	var input domain.UserInput
 
 	user,err := application.RegisterUserUseCase(input)
 
