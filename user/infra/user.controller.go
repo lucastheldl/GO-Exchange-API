@@ -1,6 +1,7 @@
 package infra
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"go-api/user/application"
@@ -25,7 +26,11 @@ type ProductHandler struct {
 func (h *ProductHandler) register(w http.ResponseWriter, r *http.Request){
 	var input domain.UserInput
 
-	user,err := application.RegisterUserUseCase(input)
+
+	ctx := context.Background()
+	repo := NewUserRepo(h.conn)
+
+	user,err := application.RegisterUserUseCase(ctx,input,repo)
 
 	if err != nil{
 		http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
