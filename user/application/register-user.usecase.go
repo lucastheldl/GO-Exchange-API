@@ -6,6 +6,7 @@ import (
 	"go-api/user/domain"
 
 	"github.com/jackc/pgx/v5"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func RegisterUserUseCase(ctx context.Context, input domain.UserInput, repo domain.UserRepository )(*domain.User, error){
@@ -21,4 +22,21 @@ func RegisterUserUseCase(ctx context.Context, input domain.UserInput, repo domai
 	}
 
 	//register user
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
+
+	if err != nil {
+		return nil, fmt.Errorf("invalid credentials")
+	}
+
+	userData := domain.UserInput{
+		Email:    input.Email,
+		Password: string(hashedPassword),
+	}
+	
+	user, err := repo.Save(ctx, userData)
+	if err != nil {
+		return nil, fmt.Errorf("error registering user: %w", err)
+	}
+	
+	return user, nil
 }

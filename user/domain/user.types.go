@@ -5,7 +5,7 @@ import (
 )
 
 type UserRepository interface {
-	Save(ctx context.Context, user UserInput) error
+	Save(ctx context.Context, user UserInput) (*User, error)
 	GetUserByEmail(ctx context.Context, email string) (*User, error)
 }
 
