@@ -32,7 +32,6 @@ func RegisterUserUseCase(ctx context.Context, input domain.UserInput, repo domai
 		Email:    input.Email,
 		Password: string(hashedPassword),
 	}
-	
 	user, err := repo.Save(ctx, userData)
 	if err != nil {
 		return nil, fmt.Errorf("error registering user: %w", err)

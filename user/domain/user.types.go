@@ -2,6 +2,7 @@ package domain
 
 import (
 	"context"
+	"time"
 )
 
 type UserRepository interface {
@@ -13,6 +14,7 @@ type UserRepository interface {
 type UserInput struct {
     Email  string  `json:"email"`
     Password string `json:"password"`
+   
 }
 
 type User struct {
@@ -20,4 +22,5 @@ type User struct {
     Name  string
     Email string
     Password string
+    CreatedAt time.Time `json:"created_at"`
 }

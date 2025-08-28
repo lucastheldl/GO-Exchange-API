@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"go-api/product/infra"
+	userInfra "go-api/user/infra"
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v5"
@@ -72,6 +73,7 @@ func main() {
     router := mux.NewRouter()
 
 	infra.RegisterRoutes(router, Conn)
+	userInfra.RegisterRoutes(router, Conn)
 	
 	fmt.Println("🚀 Server running at http://localhost:8000")
 

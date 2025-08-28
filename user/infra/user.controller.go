@@ -14,16 +14,16 @@ import (
 )
 
 func RegisterRoutes(router *mux.Router, conn *pgx.Conn) {
-	handler := &ProductHandler{conn: conn}
+	handler := &UserHandler{conn: conn}
 	router.HandleFunc("/signup", handler.register).Methods("POST")
 }
 
-type ProductHandler struct {
+type UserHandler struct {
 	conn *pgx.Conn
 }
 
 
-func (h *ProductHandler) register(w http.ResponseWriter, r *http.Request){
+func (h *UserHandler) register(w http.ResponseWriter, r *http.Request){
 	var input domain.UserInput
 
 
