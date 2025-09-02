@@ -15,6 +15,8 @@ import (
 func RegisterRoutes(router *mux.Router, conn *pgx.Conn) {
 	handler := &ProductHandler{conn: conn}
 	router.HandleFunc("/products", handler.CreateProduct).Methods("POST")
+	router.HandleFunc("/products/:id", handler.EditProduct).Methods("POST")
+	router.HandleFunc("/products/:id", handler.DeleteProduct).Methods("DELETE")
 }
 
 type ProductHandler struct {
@@ -43,3 +45,12 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(product)
 }
+
+func (h *ProductHandler) EditProduct(w http.ResponseWriter, r *http.Request){
+	
+}
+
+func (h *ProductHandler) DeleteProduct(w http.ResponseWriter, r *http.Request){
+	
+}
+
