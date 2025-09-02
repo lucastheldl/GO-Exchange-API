@@ -46,6 +46,7 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(products)
 }
+
 func (h *ProductHandler) ListAllProducts(w http.ResponseWriter, r *http.Request){
 
 	ctx := context.Background()

@@ -34,7 +34,7 @@ func (r *ProductRepo) GetAll(ctx context.Context) ([]*domain.Product, error) {
     var products []*domain.Product
     for rows.Next() {
         var p domain.Product
-        err := rows.Scan(&p.ID, &p.Name) 
+        err := rows.Scan(&p.ID, &p.Name,&p.CreatedAt,&p.Description,&p.ImgUrl,&p.UpdatedAt,&p.UserId) 
         if err != nil {
             return nil, err
         }
