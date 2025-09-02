@@ -6,11 +6,10 @@ import (
 	"fmt"
 	"go-api/user/application"
 	"go-api/user/domain"
+	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v5"
-
-	"net/http"
 )
 
 func RegisterRoutes(router *mux.Router, conn *pgx.Conn) {

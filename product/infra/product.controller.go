@@ -17,6 +17,7 @@ func RegisterRoutes(router *mux.Router, conn *pgx.Conn) {
 	router.HandleFunc("/products", handler.CreateProduct).Methods("POST")
 	router.HandleFunc("/products/:id", handler.EditProduct).Methods("POST")
 	router.HandleFunc("/products/:id", handler.DeleteProduct).Methods("DELETE")
+	router.HandleFunc("/products", handler.ListAllProducts).Methods("GET")
 }
 
 type ProductHandler struct {
@@ -36,14 +37,28 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	repo := NewProductRepo(h.conn)
 
-	product, err := application.CreateProductUseCase(ctx, input, repo)
+	products, err := application.CreateProductUseCase(ctx, input, repo)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(product)
+	json.NewEncoder(w).Encode(products)
+}
+func (h *ProductHandler) ListAllProducts(w http.ResponseWriter, r *http.Request){
+
+	ctx := context.Background()
+	repo := NewProductRepo(h.conn)
+
+	products, err := application.GetAllProductsUseCase(ctx, repo)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(products)
 }
 
 func (h *ProductHandler) EditProduct(w http.ResponseWriter, r *http.Request){

@@ -23,3 +23,27 @@ func (r *ProductRepo) Save(ctx context.Context, p domain.ProductInput) error {
 
 	return err
 }
+
+func (r *ProductRepo) GetAll(ctx context.Context) ([]*domain.Product, error) {
+    rows, err := r.Conn.Query(ctx, `SELECT * FROM products`)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var products []*domain.Product
+    for rows.Next() {
+        var p domain.Product
+        err := rows.Scan(&p.ID, &p.Name) 
+        if err != nil {
+            return nil, err
+        }
+        products = append(products, &p)
+    }
+    
+    if err = rows.Err(); err != nil {
+        return nil, err
+    }
+    
+    return products, nil
+}
